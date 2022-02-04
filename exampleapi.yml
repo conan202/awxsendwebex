@@ -1,0 +1,25 @@
+# ---
+# hello_api.yml
+#
+# Envía un mensaje utilizando la API de Webex Teams
+# ---
+
+- name: Ejemplo de uso del modulo `uri`.
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Envío de mensaje a través del módulo uri
+      uri:
+        url: 'https://api.ciscospark.com/v1/messages'
+        method: POST
+        headers:
+          Authorization: 'Bearer {{webex_teams_token}}'
+        body:
+          roomId: '{{ roomId }}'
+          text: '{{ message }}'
+        body_format: json
+        return_content: yes
+      register: output
+    - debug:
+        msg: '{{output}}'
